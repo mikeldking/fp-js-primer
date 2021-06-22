@@ -1,7 +1,6 @@
 #!/usr/bin/env
 
 // Functions that only take one parameter are called unary functions
-
 function capitalize(str) {
     return str.toUpperCase();
 }
@@ -29,6 +28,7 @@ console.log(
 
 // We cant to write (e ∘ f ∘ g )(x)
 const identity = (x) => x;
+
 function compose(...fns) {
     return fns.reverse().reduce((acc, fn) => {
         return (x) => {
@@ -40,3 +40,16 @@ function compose(...fns) {
 const addHype = compose(addExclamation, capitalize, addExcitement);
 
 console.log(addHype("I'm going to Disneyland"));
+
+// Let's make a more useful example by extending what we already did
+const map = (fn) => (mappable) => mappable.map(fn);
+const join = (char) => (mappable) => mappable.join(char);
+const split = (char) => (str) => str.split(char);
+
+const addStoke = compose(join(" "), map(addHype), split(". "));
+
+console.log(
+    addStoke(
+        "I'm going to disneyland. It should be fun. I leave for florida tomorrow"
+    )
+);
